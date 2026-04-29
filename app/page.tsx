@@ -220,7 +220,7 @@ function CaseStudy() {
     {
       name: "Commercial Real Estate Owner",
       blurb:
-        "Industrial / office building owner. Replacing the spreadsheet-and-PDF stack with AI-native ops: automated rent invoicing and NNN reconciliation, lease-clause search across the full tenant portfolio, drafted tenant communications, and deadline tracking the owner used to do by hand.",
+        "Replaced the spreadsheet-and-PDF stack with AI-native ops — automated billing, lease intelligence, and tenant comms across the portfolio.",
       tags: [
         "Automated billing",
         "Lease intelligence",
