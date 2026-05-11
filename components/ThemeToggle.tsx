@@ -85,14 +85,14 @@ export default function ThemeToggle({ className }: { className?: string }) {
         (className ?? "")
       }
     >
-      {/* Sun: visible in dark mode (clicking switches to light) */}
+      {/* Sun: shown in light mode (current state). Click switches to dark. */}
       <svg
         viewBox="0 0 24 24"
         className={
           "absolute w-4 h-4 text-foreground/80 transition-all duration-300 " +
           (isDark
-            ? "opacity-100 rotate-0 scale-100"
-            : "opacity-0 -rotate-90 scale-50")
+            ? "opacity-0 -rotate-90 scale-50"
+            : "opacity-100 rotate-0 scale-100")
         }
         fill="none"
         stroke="currentColor"
@@ -112,14 +112,14 @@ export default function ThemeToggle({ className }: { className?: string }) {
         <path d="M17.66 6.34l1.41-1.41" />
       </svg>
 
-      {/* Moon: visible in light mode (clicking switches to dark) */}
+      {/* Moon: shown in dark mode (current state). Click switches to light. */}
       <svg
         viewBox="0 0 24 24"
         className={
           "absolute w-4 h-4 text-foreground/80 transition-all duration-300 " +
           (isDark
-            ? "opacity-0 rotate-90 scale-50"
-            : "opacity-100 rotate-0 scale-100")
+            ? "opacity-100 rotate-0 scale-100"
+            : "opacity-0 rotate-90 scale-50")
         }
         fill="none"
         stroke="currentColor"
