@@ -24,7 +24,7 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-xl border border-border bg-foreground/[0.02] p-8 text-center">
+      <div className="rounded-xl border border-border card-surface p-8 text-center">
         <p className="text-foreground font-medium mb-1">Message received.</p>
         <p className="text-sm text-foreground/40">We&apos;ll be in touch shortly.</p>
       </div>

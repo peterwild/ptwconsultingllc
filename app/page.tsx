@@ -30,9 +30,9 @@ function FadeIn({
 function MeshGradient() {
   return (
     <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
-      <div className="absolute -top-[40%] -left-[20%] w-[80%] h-[80%] rounded-full opacity-20 blur-[120px] bg-indigo-600 animate-pulse light:opacity-25" style={{ animationDuration: "8s" }} />
-      <div className="absolute -top-[20%] -right-[20%] w-[60%] h-[60%] rounded-full opacity-15 blur-[120px] bg-cyan-500 animate-pulse light:opacity-20" style={{ animationDuration: "12s" }} />
-      <div className="absolute top-[20%] left-[30%] w-[40%] h-[40%] rounded-full opacity-10 blur-[100px] bg-violet-500 animate-pulse light:opacity-15" style={{ animationDuration: "10s" }} />
+      <div className="absolute -top-[40%] -left-[20%] w-[80%] h-[80%] rounded-full opacity-20 blur-[120px] bg-indigo-600 animate-pulse light:opacity-50 light:bg-indigo-500" style={{ animationDuration: "8s" }} />
+      <div className="absolute -top-[20%] -right-[20%] w-[60%] h-[60%] rounded-full opacity-15 blur-[120px] bg-cyan-500 animate-pulse light:opacity-45 light:bg-cyan-400" style={{ animationDuration: "12s" }} />
+      <div className="absolute top-[20%] left-[30%] w-[40%] h-[40%] rounded-full opacity-10 blur-[100px] bg-violet-500 animate-pulse light:opacity-40 light:bg-violet-400" style={{ animationDuration: "10s" }} />
     </div>
   );
 }
@@ -100,7 +100,7 @@ function Hero() {
           <h1 className="text-5xl sm:text-7xl font-semibold tracking-tight leading-[1.08] text-foreground">
             You built something great.
             <br />
-            <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400 light:from-indigo-600 light:via-cyan-600 light:to-emerald-600 bg-clip-text text-transparent">
               Now let AI take it further.
             </span>
           </h1>
@@ -132,7 +132,7 @@ function Halo() {
           </p>
         </FadeIn>
         <FadeIn delay={0.06}>
-          <div className="rounded-2xl p-10 sm:p-14 bg-foreground/[0.02] border border-border relative overflow-hidden">
+          <div className="rounded-2xl p-10 sm:p-14 card-surface border border-border relative overflow-hidden">
             <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px]" />
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground mb-4 relative">
               HALO Businesses
@@ -190,7 +190,7 @@ function Services() {
         <div className="grid sm:grid-cols-2 gap-4">
           {items.map((s, i) => (
             <FadeIn key={s.title} delay={i * 0.06}>
-              <div className="group rounded-2xl p-7 bg-foreground/[0.02] border border-border hover:border-foreground/[0.12] hover:bg-foreground/[0.04] transition-all duration-300">
+              <div className="group rounded-2xl p-7 card-surface card-surface-hover border border-border hover:border-foreground/[0.12] transition-all duration-300">
                 <span className="text-sm font-mono text-foreground/20 group-hover:text-indigo-400 transition-colors">
                   {s.icon}
                 </span>
@@ -303,7 +303,7 @@ function Team() {
             },
           ].map((p, i) => (
             <FadeIn key={p.name} delay={i * 0.08}>
-              <div className="rounded-2xl p-7 bg-foreground/[0.02] border border-border">
+              <div className="rounded-2xl p-7 card-surface border border-border">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-medium text-foreground">{p.name}</h3>
                   <a

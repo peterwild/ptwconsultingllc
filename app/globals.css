@@ -108,6 +108,27 @@
   background-size: 32px 32px;
 }
 
+/* Card surface — subtle ink overlay in dark mode; in light mode the overlay
+   alone is too flat, so we bump opacity and add a soft elevation shadow. */
+.card-surface {
+  background-color: rgb(var(--ink) / 0.02);
+}
+.card-surface-hover:hover {
+  background-color: rgb(var(--ink) / 0.04);
+}
+[data-theme="light"] .card-surface {
+  background-color: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .card-surface-hover:hover {
+  background-color: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
 /* View Transitions: circular reveal of the new theme from the toggle's center.
    The animation itself (clip-path keyframes + origin coords) is driven from
    ThemeToggle.tsx via Element.animate(). Here we just neutralize the default
