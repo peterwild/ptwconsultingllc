@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import ContactForm from "@/components/ContactForm";
 import ThemeToggle from "@/components/ThemeToggle";
 
@@ -208,8 +208,34 @@ function Services() {
 }
 
 /* ─── Case Studies ─────────────────────────────────────────────────────── */
+type Study = {
+  name: string;
+  kicker?: string;
+  blurb: string;
+  tags: string[];
+  glow: string;
+  confidential?: boolean;
+};
+
 function CaseStudy() {
-  const studies = [
+  const studies: Study[] = [
+    {
+      name: "SEC Reg D 506(c) Accreditation Verification",
+      kicker: "AI-native compliance SaaS",
+      blurb:
+        "Production web app that automates the accredited-investor verification process — the manual, attorney-billed workflow that funds pay big-law thousands per investor to run. Self-serve flows for net-worth, income, professional-letter, and appeal, with human-in-the-loop review only on edge cases.",
+      tags: [
+        "Next.js + Clerk",
+        "Postgres + Drizzle",
+        "Plaid income/asset pulls",
+        "OpenAI doc review",
+        "Async S3/SQS pipelines",
+        "SendGrid notifications",
+        "Backoffice review tooling",
+      ],
+      glow: "bg-cyan-500/10",
+      confidential: true,
+    },
     {
       name: "Boston Tree Preservation",
       blurb:
@@ -232,46 +258,132 @@ function CaseStudy() {
     },
   ];
 
+  const [[index, direction], setState] = useState<[number, number]>([0, 0]);
+  const count = studies.length;
+  const advance = (delta: number) =>
+    setState(([i]) => [(i + delta + count) % count, delta]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight")
+        setState(([i]) => [(i + 1) % count, 1]);
+      else if (e.key === "ArrowLeft")
+        setState(([i]) => [(i - 1 + count) % count, -1]);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [count]);
+
+  const study = studies[index];
+
   return (
     <section id="work" className="py-14 px-6">
       <div className="max-w-5xl mx-auto">
         <FadeIn>
-          <p className="text-xs uppercase tracking-[0.2em] text-foreground/30 mb-8 font-mono">
-            Case Studies
-          </p>
+          <div className="flex items-baseline justify-between mb-8">
+            <p className="text-xs uppercase tracking-[0.2em] text-foreground/30 font-mono">
+              Case Studies
+            </p>
+            <p className="text-xs text-foreground/30 font-mono tabular-nums">
+              {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+            </p>
+          </div>
         </FadeIn>
-        <div className="grid sm:grid-cols-2 gap-4">
-          {studies.map((s, i) => (
-            <FadeIn key={s.name} delay={i * 0.06}>
-              <div className="rounded-2xl border border-border bg-foreground/[0.02] p-8 sm:p-10 relative overflow-hidden h-full">
-                <div
-                  className={`absolute -top-20 -right-20 w-60 h-60 rounded-full blur-[80px] ${s.glow}`}
-                />
-                {s.confidential && (
-                  <span className="absolute top-5 right-5 text-[10px] uppercase tracking-[0.2em] text-foreground/30 font-mono">
-                    Confidential
-                  </span>
-                )}
-                <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground mb-4 relative pr-24">
-                  {s.name}
-                </h2>
-                <p className="text-base text-foreground/40 mb-8 leading-relaxed relative">
-                  {s.blurb}
-                </p>
-                <div className="flex flex-wrap gap-2 relative">
-                  {s.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs px-3 py-1.5 rounded-full bg-foreground/[0.06] text-foreground/50 border border-border"
-                    >
-                      {tag}
+
+        <FadeIn>
+          <div className="relative">
+            <div className="relative overflow-hidden">
+              <AnimatePresence mode="wait" custom={direction} initial={false}>
+                <motion.div
+                  key={index}
+                  custom={direction}
+                  initial={{ opacity: 0, x: direction > 0 ? 60 : -60 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: direction > 0 ? -60 : 60 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x < -60) advance(1);
+                    else if (info.offset.x > 60) advance(-1);
+                  }}
+                  className="rounded-2xl border border-border bg-foreground/[0.02] p-8 sm:p-12 relative overflow-hidden cursor-grab active:cursor-grabbing select-none"
+                >
+                  <div
+                    className={`absolute -top-20 -right-20 w-72 h-72 rounded-full blur-[90px] ${study.glow}`}
+                  />
+                  {study.confidential && (
+                    <span className="absolute top-5 right-5 text-[10px] uppercase tracking-[0.2em] text-foreground/30 font-mono">
+                      Confidential
                     </span>
-                  ))}
-                </div>
+                  )}
+                  {study.kicker && (
+                    <p className="text-xs uppercase tracking-[0.2em] text-foreground/40 mb-3 font-mono relative">
+                      {study.kicker}
+                    </p>
+                  )}
+                  <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground mb-4 relative pr-24">
+                    {study.name}
+                  </h2>
+                  <p className="text-base text-foreground/40 mb-8 leading-relaxed relative max-w-3xl">
+                    {study.blurb}
+                  </p>
+                  <div className="flex flex-wrap gap-2 relative">
+                    {study.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-3 py-1.5 rounded-full bg-foreground/[0.06] text-foreground/50 border border-border"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            <div className="flex items-center justify-between mt-6">
+              <button
+                type="button"
+                aria-label="Previous case study"
+                onClick={() => advance(-1)}
+                className="w-9 h-9 rounded-full border border-border bg-foreground/[0.02] text-foreground/50 hover:text-foreground hover:bg-foreground/[0.06] transition flex items-center justify-center"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+
+              <div className="flex items-center gap-2">
+                {studies.map((s, i) => (
+                  <button
+                    key={s.name}
+                    type="button"
+                    aria-label={`Go to case study ${i + 1}`}
+                    onClick={() => setState(([cur]) => [i, i > cur ? 1 : -1])}
+                    className={`h-1.5 rounded-full transition-all ${
+                      i === index
+                        ? "w-8 bg-foreground/60"
+                        : "w-1.5 bg-foreground/20 hover:bg-foreground/40"
+                    }`}
+                  />
+                ))}
               </div>
-            </FadeIn>
-          ))}
-        </div>
+
+              <button
+                type="button"
+                aria-label="Next case study"
+                onClick={() => advance(1)}
+                className="w-9 h-9 rounded-full border border-border bg-foreground/[0.02] text-foreground/50 hover:text-foreground hover:bg-foreground/[0.06] transition flex items-center justify-center"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
