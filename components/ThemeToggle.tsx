@@ -39,8 +39,16 @@ export default function ThemeToggle({ className }: { className?: string }) {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+    // Skip the View Transitions reveal on touch devices — the full-viewport
+    // snapshot stalls the click on high-DPI mobile screens with blur effects.
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-    if (!docAny.startViewTransition || reduceMotion || !btn) {
+    if (
+      !docAny.startViewTransition ||
+      reduceMotion ||
+      coarsePointer ||
+      !btn
+    ) {
       setTheme(next);
       return;
     }
