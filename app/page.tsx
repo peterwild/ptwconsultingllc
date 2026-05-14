@@ -374,10 +374,8 @@ function CaseStudy() {
               ref={trackRef}
               className="carousel-track flex items-stretch gap-4"
               style={{
-                WebkitMaskImage:
-                  "linear-gradient(to right, transparent 0, black 5%, black 95%, transparent 100%)",
-                maskImage:
-                  "linear-gradient(to right, transparent 0, black 5%, black 95%, transparent 100%)",
+                WebkitMaskImage: `linear-gradient(to right, ${index === 0 ? "black 0" : "transparent 0, black 5%"}, ${index === count - 1 ? "black 100%" : "black 95%, transparent 100%"})`,
+                maskImage: `linear-gradient(to right, ${index === 0 ? "black 0" : "transparent 0, black 5%"}, ${index === count - 1 ? "black 100%" : "black 95%, transparent 100%"})`,
               }}
             >
               {studies.map((study, i) => (
