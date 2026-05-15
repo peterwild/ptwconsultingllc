@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
-// TEMP: Geist disabled to test font-loading mobile bug. Restore after diagnosis.
-// import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider, themeBootstrapScript } from "@/components/ThemeProvider";
 import ScrollDepthTracker from "@/components/ScrollDepthTracker";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-//
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "PTW Consulting — AI Transformation for Small Business",
@@ -36,6 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
       <head>
