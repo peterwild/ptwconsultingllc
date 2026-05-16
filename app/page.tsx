@@ -167,7 +167,7 @@ function Halo() {
           </p>
         </FadeIn>
         <FadeIn delay={0.06}>
-          <div className="rounded-2xl p-10 sm:p-14 card-surface border border-border relative overflow-hidden">
+          <div className="rounded-2xl p-10 sm:p-14 card-surface border border-border relative overflow-hidden isolate [clip-path:inset(0_round_1rem)]">
             <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[40px]" />
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground mb-4 relative">
               HALO Businesses
